@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CRQ Reimagined">
+    <meta name="author" content="Avirup Kundu || Tata Consultancy Services">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <title>CRQ Intelligence | TCS-SCE | Homepage</title>
+</head>
+
+<body>
+    {% comment %} Import Navbar {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient fixed-top">
+        {% include 'crq_app/navbar.html' %}
+    </nav>
+    <br><hr>
+
+    <h1 style="color: white">Homepage</h1>
+
+
+    {% comment %} Row 1 of Homepage starts here. {% endcomment %}
+    <div class="row justify-content-md-center border border-light">
+        {% comment %} Column 1 of Row 1 Starts Here {% endcomment %}
+        <div class="col border border-light">
+            {% comment %} Patching Calendar Embedding Starts {% endcomment %}
+            {% comment %} <div class="embed-container">
+                <iframe src="https://app.powerbi.com/reportEmbed?reportId=0afc8011-d811-4faf-ae6b-24d24b62b923&autoAuth=true&ctid=5b2a8fee-4c95-4bdc-8aae-196f8aacb1b6" width="700" height="300" allowFullScreen="true"></iframe>
+                <div class="embed-container" id="reportContainer1"></div>
+            </div> {% endcomment %}
+            {% comment %} Patching Calendar Embedding Ends {% endcomment %}
+        </div>
+        {% comment %} Column 1 of Row 1 Ends Here. {% endcomment %}
+
+        {% comment %} Column 2 of Row 1 Starts Here {% endcomment %}
+        <div class="col border border-light">
+        </div>
+        {% comment %} Column 2 of Row 1 Ends Here. {% endcomment %}
+    </div>
+    {% comment %} Row 1 Homepage ends here. {% endcomment %}    
+
+
+    {% comment %} Import footer {% endcomment %}
+    <footer class="bg-dark text-center text-lg-start my-0 py-1 fixed-bottom text-light">
+        {% comment %} <footer class="container-fluid bg-dark my-0 py-1 text-light"> {% endcomment %}
+        {% include 'crq_app/footer.html' %}
+    </footer>
+
+
+    {% comment %} Script for power bi authentication starts here {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/powerbi-client/2.13.0/powerbi.min.js"></script>
+    <script>
+        var embedUrl1 = "https://app.powerbi.com/reportEmbed?reportId=0afc8011-d811-4faf-ae6b-24d24b62b923&autoAuth=true&ctid=5b2a8fee-4c95-4bdc-8aae-196f8aacb1b6";
+
+        var models = window['powerbi-client'].models;
+        var config1 = {
+            type: 'report',
+            tokenType: models.TokenType.Embed,
+            accessToken: '<ACCESS_TOKEN_INSERT_HERE>',
+            embedUrl: embedUrl1,
+            id: '0afc8011-d811-4faf-ae6b-24d24b62b923',
+            settings: {
+                filterPaneEnabled: false,
+                navContentPaneEnabled: false
+            }
+        };
+
+        // Embed the report and display it within the div container.
+        var reportContainer1 = document.getElementById('reportContainer1');
+        powerbi.embed(reportContainer1, config1);
+    </script>
+    {% comment %} Script for power bi authentication ends here. {% endcomment %}
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>

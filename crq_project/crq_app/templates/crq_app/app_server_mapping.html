@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CRQ Reimagined">
+    <meta name="author" content="Avirup Kundu || Tata Consultancy Services">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> {% endcomment %}
+
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <title>CRQ Intelligence | TCS-SCE | Index Page</title>
+
+    <style>
+        body{
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    {% comment %} Import Navbar {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient fixed-top">
+        {% include 'crq_app/navbar.html' %}
+    </nav>
+    <br><hr>
+
+    <h1>This is mapping page. <a href="/home">Please click here for homepage.</a></h1>
+
+    {% comment %} Input Form Starts {% endcomment %}
+    <div class="container">
+        <h4 style="color: red;">**Insert the details below</h4>
+        <form method="POST" class="post-form text-center">
+            <table class="table table-sm table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center; border: 1px solid black; padding: 5px;">Application Name</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 5px;">Application Owner</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 5px;">FQDN</th>
+                    </tr>
+                </thead>
+                {% if mapping_data %}
+                <tbody>
+                    {% for data in mapping_data %}
+                    <tr>
+                        <td style="text-align: center; border: 1px solid black; padding: 5px; color: white;">
+                            {{ data.Application_Name }}
+                        </td>
+                        <td style="text-align: center; border: 1px solid black; padding: 5px; color: white;">
+                            {{ data.Application_Owner }}
+                        </td>
+                        <td style="text-align: center; border: 1px solid black; padding: 5px; color: white;">
+                            {{ data.FQDN }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </form>
+    </div>
+
+    {% comment %} Import footer {% endcomment %}
+    <footer class="bg-dark text-center text-lg-start my-0 py-1 fixed-bottom text-light">
+        {% comment %} <footer class="container-fluid bg-dark my-0 py-1 text-light"> {% endcomment %}
+        {% include 'crq_app/footer.html' %}
+    </footer>
+</body>

@@ -1,0 +1,125 @@
+{% load static %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            overflow-x: hidden;
+            background: #10101E;
+        }
+        img{
+            margin-top: -10px;
+        }
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 12px;  /* Preferred icon size */
+            display: inline-block;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+            margin-top: -50px;
+
+            /* Support for all WebKit browsers. */
+            -webkit-font-smoothing: antialiased;
+            /* Support for Safari and Chrome. */
+            text-rendering: optimizeLegibility;
+
+            /* Support for Firefox. */
+            -moz-osx-font-smoothing: grayscale;
+
+            /* Support for IE. */
+            font-feature-settings: 'liga';
+           }
+    </style>
+    <div class="container-fluid">
+        <a class="navbar-brand btn-sm" href="https://www.tcs.com/">
+            <img class="brandLogo" src="{% static 'images/tcs_logo.png' %}" width="60 px" alt="Tata Consultancy Services">
+            <img class="brandLogo" src="{% static 'images/sce_logo.png' %}" width="60 px" alt="Southern California Edison">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item font-weight-bold">
+                    <a class="nav-link" href="/home" style="font-size: 12px;"><i class="material-icons">home</i>    Home</a>
+                </li>
+
+                <li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 10px; margin-top: 5px">
+                            <i class="material-icons">menu</i>    Dropdown
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item btn-outline-primary" href="/home/project-manager"><i class="material-icons">safety_divider</i>    Project Team Space</a>
+                            <a class="dropdown-item btn-outline-primary" href="/"><i class="material-icons">apps</i>    App Owner Space</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons">person_pin</i>    SMOO Manager Space</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons">auto_stories</i>    Dropdown4</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons">record_voice_over</i>    Dropdown5</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons">app_registration</i>    Dropdown6</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons">stacked_bar_chart</i>    Dropdown7</a>
+
+                        </div>
+                    </div>
+                </li>
+
+                <li><p> | </p></li>
+                <li><p> | </p></li>
+
+                <li>
+                    <div class="btn-group">
+                        <a class="btn btn-outline-light btn-sm" href="https://app.powerbi.com/groups/me/reports/0afc8011-d811-4faf-ae6b-24d24b62b923/ReportSection" target="_blank" style="font-size: 10px; margin-top: 5px"><i class="material-icons">calendar_month</i>    Patching Calendar</a>
+                    </div>
+                </li>
+
+                <li><p> | </p></li>
+
+                <li>
+                    <div class="btn-group">
+                        <a class="btn btn-outline-light btn-sm" href="/home/app-server-mapping" target="_blank" style="font-size: 10px; margin-top: 5px"><i class="material-icons">explore</i>    Mapping</a>
+                    </div>
+                </li>
+                
+                <li><p> | </p></li>
+
+                <li>
+                    <div class="btn-group">
+                        <a class="btn btn-outline-light btn-sm" href="/" target="_blank" style="font-size: 10px; margin-top: 5px">
+                            <i class="material-icons">event</i>    Button3
+                        </a>
+                    </div>
+                </li>
+
+                <li><p> | </p></li>
+            </ul>
+
+
+            {% if user.is_authenticated %}
+            <div>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle btn-sm" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="font-size: 12px; margin-top: -5px;">
+                            Hello <em>{{user.first_name}}</em>    <i class="material-icons">account_circle</i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="logout/">Logout    <i class="material-icons">logout</i></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+            <div>
+                <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#loginModal" style="font-size: 10px; margin-top: -15px"><i class="material-icons">login</i>    Login</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
