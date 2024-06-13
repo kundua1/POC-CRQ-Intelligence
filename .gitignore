@@ -1,2 +1,4 @@
 .venv
+.vscode
 crq_project/crq_app/.env
+crq_project/crq_app/__pycache__
