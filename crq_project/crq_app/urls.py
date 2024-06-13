@@ -7,5 +7,5 @@ urlpatterns = [
     path('', views.index),
     path('home/', views.home),
     path('home/app-server-mapping/', views.app_server_mapping),
-    path('home/project-manager/', views.project_manager_view)
+    path('home/project-team/', views.project_team_view)
 ]

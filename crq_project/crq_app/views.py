@@ -15,14 +15,16 @@ def home(request):
 
 def app_server_mapping(request):
     from . import db
+    wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
+    
     unique_business_units_sql_query = f"""SELECT DISTINCT
                                                 Business_Unit
                                             FROM
-                                                Wintel_Inventory
+                                                {wintel_inventory_table_name}
                                             ORDER BY
                                                 Business_Unit;
                                             """
-    wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
+    
     business_unit = "T&D"
     
     sql_query = f"""SELECT
@@ -38,7 +40,6 @@ def app_server_mapping(request):
                         Application_Owner;"""
                         
     mapping_data = db.get_data(sql_query=sql_query)
-    print(mapping_data)
     
     context = {
         'mapping_data': mapping_data        
@@ -47,5 +48,21 @@ def app_server_mapping(request):
     return render(request, "crq_app/app_server_mapping.html", context=context)
 
 
-def project_manager_view(request):
-    return render(request, "crq_app/project_manager_view.html")
+def project_team_view(request):
+    from . import db
+    wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
+    
+    wintel_unique_app_names_sql_query = f"""SELECT DISTINCT
+                                                Application_Name
+                                            FROM
+                                                {wintel_inventory_table_name}
+                                            ORDER BY
+                                                Application_Name;
+                                            """
+    wintel_unique_apps_data = db.get_data(sql_query=wintel_unique_app_names_sql_query)
+    
+    context = {
+        'wintel_unique_apps_data': wintel_unique_apps_data
+    }
+    
+    return render(request, "crq_app/project_team_view.html", context)
