@@ -45,22 +45,22 @@
             <table class="table table-sm table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="text-align: center; border: 1px solid black; padding: 5px;">Application Name</th>
-                        <th style="text-align: center; border: 1px solid black; padding: 5px;">Application Owner</th>
-                        <th style="text-align: center; border: 1px solid black; padding: 5px;">FQDN</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Name</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Owner</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 3px;">FQDN</th>
                     </tr>
                 </thead>
                 {% if mapping_data %}
                 <tbody>
                     {% for data in mapping_data %}
                     <tr>
-                        <td style="text-align: center; border: 1px solid black; padding: 5px; color: white;">
+                        <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
                             {{ data.Application_Name }}
                         </td>
-                        <td style="text-align: center; border: 1px solid black; padding: 5px; color: white;">
+                        <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
                             {{ data.Application_Owner }}
                         </td>
-                        <td style="text-align: center; border: 1px solid black; padding: 5px; color: white;">
+                        <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
                             {{ data.FQDN }}
                         </td>
                     </tr>
