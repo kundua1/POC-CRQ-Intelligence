@@ -16,6 +16,59 @@
     <link rel="icon" href="{% static 'images/favicon.ico' %}">
 
     <title>CRQ Intelligence | TCS-SCE | Homepage</title>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Operating System', 'link', 'Win_OS', 'Unix_OS'],
+            ['Windows', '/', {{ past_crq_all_data.0.Windows_Server_Count }},  {{ past_crq_all_data.2.Windows_Server_Count }}],
+            ['Unix', '/', {{ past_crq_all_data.1.Windows_Server_Count }},  {{ past_crq_all_data.3.Windows_Server_Count }}]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 2, 3, 4]);
+
+        var options = {
+            title : 'Unix DMZ Prod | Total Servers:',
+            seriesType: 'bars',
+            hAxis: {
+                slantedText:true,
+                slantedTextAngle:45,
+            },
+            colors: ['green','red', 'brown'],
+            legend: {
+            position: "top",
+            textStyle: {
+                fontSize: 9
+            }
+            },
+            chartArea:{
+            width:'85%',
+            height:'50%'
+            },
+            explorer: {
+            actions: ['dragToZoom', 'rightClickToReset'],
+            axis: 'horizontal',
+            keepInBounds: true,
+            maxZoomIn: 4.0
+            }
+        };
+
+        var chart = new google.visualization.ColumnChart(
+            document.getElementById('past_crq_all_data_chart'));
+        chart.draw(view, options);
+
+        var selectHandler = function(e) {
+            window.location = data.getValue(chart.getSelection()[0]['row'], 1 );
+        }
+
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+        }
+    </script>
 </head>
 
 <body>
@@ -30,18 +83,14 @@
         <h3 class="text-center text-monospace font-weight-bolder">Homepage</h3>
     </div>
     {% comment %} Page Title Ends {% endcomment %}
-
+    
+    <p style="color: white">hello{{ past_crq_all_data.0.Windows_Server_Count }}</p>
 
     {% comment %} Row 1 of Homepage starts here. {% endcomment %}
     <div class="row justify-content-md-center border border-light">
         {% comment %} Column 1 of Row 1 Starts Here {% endcomment %}
         <div class="col border border-light">
-            {% comment %} Patching Calendar Embedding Starts {% endcomment %}
-            {% comment %} <div class="embed-container">
-                <iframe src="https://app.powerbi.com/reportEmbed?reportId=0afc8011-d811-4faf-ae6b-24d24b62b923&autoAuth=true&ctid=5b2a8fee-4c95-4bdc-8aae-196f8aacb1b6" width="700" height="300" allowFullScreen="true"></iframe>
-                <div class="embed-container" id="reportContainer1"></div>
-            </div> {% endcomment %}
-            {% comment %} Patching Calendar Embedding Ends {% endcomment %}
+            <div class="container-fluid" id="past_crq_all_data_chart" style="width: 408px; height: 270px;"></div>
         </div>
         {% comment %} Column 1 of Row 1 Ends Here. {% endcomment %}
 
@@ -58,31 +107,6 @@
         {% comment %} <footer class="container-fluid bg-dark my-0 py-1 text-light"> {% endcomment %}
         {% include 'crq_app/footer.html' %}
     </footer>
-
-
-    {% comment %} Script for power bi authentication starts here {% endcomment %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/powerbi-client/2.13.0/powerbi.min.js"></script>
-    <script>
-        var embedUrl1 = "https://app.powerbi.com/reportEmbed?reportId=0afc8011-d811-4faf-ae6b-24d24b62b923&autoAuth=true&ctid=5b2a8fee-4c95-4bdc-8aae-196f8aacb1b6";
-
-        var models = window['powerbi-client'].models;
-        var config1 = {
-            type: 'report',
-            tokenType: models.TokenType.Embed,
-            accessToken: '<ACCESS_TOKEN_INSERT_HERE>',
-            embedUrl: embedUrl1,
-            id: '0afc8011-d811-4faf-ae6b-24d24b62b923',
-            settings: {
-                filterPaneEnabled: false,
-                navContentPaneEnabled: false
-            }
-        };
-
-        // Embed the report and display it within the div container.
-        var reportContainer1 = document.getElementById('reportContainer1');
-        powerbi.embed(reportContainer1, config1);
-    </script>
-    {% comment %} Script for power bi authentication ends here. {% endcomment %}
 
 </body>
 

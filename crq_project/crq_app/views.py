@@ -10,7 +10,21 @@ def index(request):
 
 
 def home(request):
-    return render(request, "crq_app/home.html")
+    from . import db
+    # Ongoing
+    
+    # Upcoming
+    
+    # Past
+    past_crq_table_name = str(os.getenv('PREVIOUS_CRQ_TABLE_NAME'))    
+    fetch_all_past_crq_details_query = f"""select * from {past_crq_table_name} order by id desc;"""    
+    past_crq_all_data = db.get_data(sql_query=fetch_all_past_crq_details_query)
+    print(past_crq_all_data)
+    
+    context = {
+        'past_crq_all_data': past_crq_all_data
+    }
+    return render(request, "crq_app/home.html", context=context)
 
 
 def app_server_mapping(request):
@@ -66,3 +80,16 @@ def project_team_view(request):
     }
     
     return render(request, "crq_app/project_team_view.html", context)
+
+
+def app_owner_view(request):
+    from . import db
+    
+    upcoming_crq_table_name = str(os.getenv('UPCOMING_CRQ_TABLE_NAME'))    
+    fetch_all_upcoming_crq_details_query = f"""select * from {upcoming_crq_table_name} order by id desc;"""    
+    past_crq_all_data = db.get_data(sql_query=fetch_all_upcoming_crq_details_query)
+    
+    context = {
+        'past_crq_all_data': past_crq_all_data
+    }
+    return render(request, "crq_app/app_owner_view.html", context= context)

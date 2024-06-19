@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index),
     path('home/', views.home),
     path('home/app-server-mapping/', views.app_server_mapping),
-    path('home/project-team/', views.project_team_view)
+    path('home/project-team/', views.project_team_view),
+    path('home/app-owner/', views.app_owner_view)
 ]

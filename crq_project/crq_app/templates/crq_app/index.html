@@ -16,6 +16,22 @@
     <link rel="icon" href="{% static 'images/favicon.ico' %}">
 
     <title>CRQ Intelligence | TCS-SCE | Index Page</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .full-screen-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("{% static 'images/hero-image.jpg' %}");
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
     {% comment %} Import Navbar {% endcomment %}
@@ -24,7 +40,9 @@
     </nav>
     <br><hr>
 
-    <h1>Hello! This is index page. <a href="/home">Please click here for homepage.</a></h1>
+    {% comment %} Hero Image Starts Here {% endcomment %}
+    <img class="full-screen-image" src="{% static 'images/hero-image.jpg' %}" alt="CRQ Intelligence Hero Image">
+    {% comment %} Hero Image Ends Here {% endcomment %}
 
     {% comment %} Import footer {% endcomment %}
     <footer class="bg-dark text-center text-lg-start my-0 py-1 fixed-bottom text-light">
