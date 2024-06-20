@@ -1,14 +1,47 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from dotenv import load_dotenv
 import os
 
+# Login Imports Below
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import auth
+
+from django.contrib import messages
+
 load_dotenv()
 
+
+def handleLogin(request):
+    if request.method == 'POST':
+        loginusername = request.POST['loginusername']
+        loginpassword = request.POST['loginpassword']
+
+        user = authenticate(username=loginusername,
+                            password=loginpassword)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/home')
+        else:
+            messages.error(request, "Invalid Credentials! \n Please check your Username & Password or Contact Administrator")
+            return redirect('/')
+
+    return HttpResponse('404 - Not Found')
+
+
+def handleLogout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('/')
+    
 
 def index(request):
     return render(request, "crq_app/index.html")
 
 
+@login_required
 def home(request):
     from . import db
     # Ongoing
@@ -27,6 +60,7 @@ def home(request):
     return render(request, "crq_app/home.html", context=context)
 
 
+@login_required
 def app_server_mapping(request):
     from . import db
     wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
@@ -62,6 +96,7 @@ def app_server_mapping(request):
     return render(request, "crq_app/app_server_mapping.html", context=context)
 
 
+@login_required
 def project_team_view(request):
     from . import db
     wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
@@ -82,6 +117,7 @@ def project_team_view(request):
     return render(request, "crq_app/project_team_view.html", context)
 
 
+@login_required
 def app_owner_view(request):
     from . import db
     

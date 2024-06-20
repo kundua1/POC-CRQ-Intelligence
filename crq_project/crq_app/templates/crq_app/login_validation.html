@@ -1,0 +1,31 @@
+{% extends 'crq_app/index.html' %}
+
+{% block content %}
+
+<div class="hero-image">
+    <div class="hero-text">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <h2 style="text-align: center;" {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</h2>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+            <h2 style="font-family: 'Bree Serif', serif; text-align: center;"><b>CRQ &nbsp; Intelligence</b></h2>
+            <h1 style="font-family: 'Alfa Slab One', cursive; text-align: center;"><b>Watch Tower</b></h1><br><br><br>
+            <h3 style="text-align: center;">Your Session is Inactive and Access is Restricted!</h3>
+            <h3 style="text-align: center;">Please Login to Continue!</h3>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <h2 style="font-family: 'Bree Serif', serif; text-align: center;"><b>CRQ &nbsp; Intelligence</b></h2>
+            <h1 style="font-family: 'Alfa Slab One', cursive; text-align: center;"><b>Watch Tower</b></h1><br><br><br>
+            <h3 style="text-align: center;">You are already Logged In and Your Session is Active!</h3>
+            <h3 style="text-align: center;"><a style="color: white; background-color: transparent; text-decoration: underline;" href="/ccc">Click Here to Return to Dashboard!    <i class="material-icons">keyboard_return</i></a></h3>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
