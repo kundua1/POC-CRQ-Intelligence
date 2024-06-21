@@ -47,6 +47,7 @@
                     <tr>
                         <td style="text-align: center; border: 1px solid white; padding: 3px;">
                             <select id="application_name", name="application_name">
+                                <option value = "select">--select--</option>
                                 {% if wintel_unique_apps_data %}
                                     {% for data in wintel_unique_apps_data %}
                                         <option value = "{{data.Application_Name}}">{{ data.Application_Name }}</option>
@@ -80,25 +81,40 @@
                     <tr>
                         <th style="text-align: center; border: 1px solid white; padding: 3px;">Application Name</th>
                         <th style="text-align: center; border: 1px solid white; padding: 3px;">Server Dependencies</th>
-                        <th style="text-align: center; border: 1px solid white; padding: 3px;">Upcoming Patch Start Date</th>
-                        <th style="text-align: center; border: 1px solid white; padding: 3px;">Upcoming Patch End Date</th>
+                        <th style="text-align: center; border: 1px solid white; padding: 3px;">Upcoming Patch CRQ</th>
+                        <th style="text-align: center; border: 1px solid white; padding: 3px;">Start Date</th>
+                        <th style="text-align: center; border: 1px solid white; padding: 3px;">End Date</th>
+                        <th style="text-align: center; border: 1px solid white; padding: 3px;">Required Days for Project</th>
                         <th style="text-align: center; border: 1px solid white; padding: 3px;">AI Suggested Timeline</th>
                         <th style="text-align: center; border: 1px solid white; padding: 3px;">Suggest Custom Timeline</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">{{ application_name }}</td>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">
+                            {% for data in server_dependency_data %}
+                                <p>{{ data.FQDN }}</p>
+                            {% endfor %}
+                        </td>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">
+                            {% for data in upcoming_crq_data %}
+                                {{ data.CRQ_Number}}
+                            {% endfor %}
+                        </td>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">
+                            {% for data in upcoming_crq_data %}
+                                {{ data.Start_Date_Time}}
+                            {% endfor %}
+                        </td>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">
+                            {% for data in upcoming_crq_data %}
+                                {{ data.End_Date_Time}}
+                            {% endfor %}
+                        </td>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">{{ project_required_days }}</td>
                         <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;"></td>
-                        {% comment %} {% for data in server_dependency_data %} {% endcomment %}
-                            <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;"></td>
-                        {% comment %} {% endfor %} {% endcomment %}
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">  
-                        </td>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                        </td>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">  
-                        </td>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;">
                             <label for="custom_start_timeline_suggesstion" style="color: white;">Start:</label>
                             <input type="datetime-local" id="custom_start_timeline_suggesstion" name="custom_start_timeline_suggesstion">
                             <br>
@@ -112,6 +128,7 @@
     </div>
     {% comment %} Output Table Ends Here {% endcomment %}
     
+    <br>
 
     {% comment %} Import footer {% endcomment %}
     <footer class="bg-dark text-center text-lg-start my-0 py-1 fixed-bottom text-light">
