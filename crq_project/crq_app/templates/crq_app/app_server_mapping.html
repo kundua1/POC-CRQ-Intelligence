@@ -105,6 +105,9 @@
                             <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Name</th>
                             <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Owner</th>
                             <th style="text-align: center; border: 1px solid black; padding: 3px;">FQDN</th>
+                            <th style="text-align: center; border: 1px solid black; padding: 3px;">IP Address</th>
+                            <th style="text-align: center; border: 1px solid black; padding: 3px;">Trust Level</th>
+                            <th style="text-align: center; border: 1px solid black; padding: 3px;">Business Unit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,6 +121,15 @@
                                 </td>
                                 <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
                                     {{ data.FQDN }}
+                                </td>
+                                <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                                    {{ data.IP_Address }}
+                                </td>
+                                <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                                    {{ data.Trust_Level }}
+                                </td>
+                                <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                                    {{ data.Business_Unit }}
                                 </td>
                             </tr>
                         {% endfor %}
