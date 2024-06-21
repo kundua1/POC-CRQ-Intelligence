@@ -49,18 +49,18 @@
                             <select id="application_name", name="application_name">
                                 {% if wintel_unique_apps_data %}
                                     {% for data in wintel_unique_apps_data %}
-                                        <option value = "data">{{ data.Application_Name }}</option>
+                                        <option value = "{{data.Application_Name}}">{{ data.Application_Name }}</option>
                                     {% endfor %}
                                 {% endif %}
                             </select>
                         </td>
                         <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                            <label for="timeline_days" style="color: white;">Required Days</label>
-                            <input class="form-group" name="timeline_days" id="timeline_days" type="number" required>
+                            <label for="required_days" style="color: white;">Required Days</label>
+                            <input class="form-group" name="required_days" id="required_days" type="number" required>
                         </td>
                         <td style="text-align: center; border: 1px solid white; padding: 3px;">
                             {% csrf_token %}
-                            <button type="submit" class="save btn btn-info text-white"><i class="material-icons">view_timeline</i><b>  Get Timeline</b></button>    
+                            <button type="submit" class="save btn btn-info text-white"><i class="material-icons">view_timeline</i><b>  Submit</b></button>    
                         </td>
                     </tr>
                 </tbody>
@@ -88,10 +88,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                        </td>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                        </td>
+                        <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;"></td>
+                        {% comment %} {% for data in server_dependency_data %} {% endcomment %}
+                            <td style="text-align: center; border: 1px solid white; padding: 3px; color: white;"></td>
+                        {% comment %} {% endfor %} {% endcomment %}
                         <td style="text-align: center; border: 1px solid white; padding: 3px;">  
                         </td>
                         <td style="text-align: center; border: 1px solid white; padding: 3px;">

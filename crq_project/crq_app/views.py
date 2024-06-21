@@ -63,19 +63,39 @@ def home(request):
 @login_required
 def app_server_mapping(request):
     from . import db
+    
+    filter_mapping_data = []
     wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
     
-    unique_business_units_sql_query = f"""SELECT DISTINCT
-                                                Business_Unit
-                                            FROM
-                                                {wintel_inventory_table_name}
-                                            ORDER BY
-                                                Business_Unit;
-                                            """
+    unique_application_sql_query = f"""SELECT DISTINCT Application_Name FROM {wintel_inventory_table_name} ORDER BY Application_Name;"""
+    unique_application_data = db.get_data(sql_query=unique_application_sql_query)
+    
+    unique_application_owner_sql_query = f"""SELECT DISTINCT Application_Owner FROM {wintel_inventory_table_name} ORDER BY Application_Owner;"""
+    unique_application_owner_data = db.get_data(sql_query=unique_application_owner_sql_query)
+    
+    unique_business_unit_sql_query = f"""SELECT DISTINCT Business_Unit FROM {wintel_inventory_table_name} ORDER BY Business_Unit;"""
+    unique_business_unit_data = db.get_data(sql_query=unique_business_unit_sql_query)
+    
+    if request.method == 'POST':
+        application_name = request.POST['application_name']
+        application_owner = request.POST['application_owner']
+        business_unit = request.POST['business_unit']
+        
+        if application_name != "select" and application_owner == "select" and business_unit == "select":
+            filter_mapping_sql_query = f"""SELECT * FROM {wintel_inventory_table_name} WHERE Application_Name = '{application_name}' ORDER BY Application_Name;"""
+            filter_mapping_data = db.get_data(sql_query=filter_mapping_sql_query)
+            
+        elif application_name == "select" and application_owner != "select" and business_unit == "select":
+            filter_mapping_sql_query = f"""SELECT * FROM {wintel_inventory_table_name} WHERE Application_Owner = '{application_owner}' ORDER BY Application_Owner;"""
+            filter_mapping_data = db.get_data(sql_query=filter_mapping_sql_query)
+            
+        elif application_name == "select" and application_owner == "select" and business_unit !="select":
+            filter_mapping_sql_query = f"""SELECT * FROM {wintel_inventory_table_name} WHERE Business_Unit = '{application_owner}' ORDER BY Business_Unit;"""
+            filter_mapping_data = db.get_data(sql_query=filter_mapping_sql_query)
     
     business_unit = "T&D"
     
-    sql_query = f"""SELECT
+    mapping_data_sql_query = f"""SELECT
                         Application_Name,
                         Application_Owner,
                         FQDN
@@ -87,9 +107,15 @@ def app_server_mapping(request):
                         Application_Name,
                         Application_Owner;"""
                         
-    mapping_data = db.get_data(sql_query=sql_query)
+    mapping_data = db.get_data(sql_query=mapping_data_sql_query)
+    
+    
     
     context = {
+        'unique_application_data': unique_application_data,
+        'unique_application_owner_data': unique_application_owner_data,
+        'unique_business_unit_data': unique_business_unit_data,
+        'filter_mapping_data': filter_mapping_data,
         'mapping_data': mapping_data        
     }    
     
@@ -99,6 +125,9 @@ def app_server_mapping(request):
 @login_required
 def project_team_view(request):
     from . import db
+    application_name = ""
+    project_required_days = ""
+    
     wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))
     
     wintel_unique_app_names_sql_query = f"""SELECT DISTINCT
@@ -110,8 +139,19 @@ def project_team_view(request):
                                             """
     wintel_unique_apps_data = db.get_data(sql_query=wintel_unique_app_names_sql_query)
     
+    if request.method == 'POST':
+        application_name = request.POST['application_name']
+        project_required_days = request.POST['required_days']
+        
+        server_dependency_query = f"""SELECT FQDN FROM {wintel_inventory_table_name} WHERE application_name = '{application_name}';""" 
+        # server_dependency_data = db.get_data(sql_query=server_dependency_query)
+        
+    
     context = {
-        'wintel_unique_apps_data': wintel_unique_apps_data
+        'wintel_unique_apps_data': wintel_unique_apps_data,
+        'application_name': application_name,
+        'project_required_days': project_required_days,
+        # 'server_dependency_data': server_dependency_data
     }
     
     return render(request, "crq_app/project_team_view.html", context)
@@ -123,9 +163,16 @@ def app_owner_view(request):
     
     upcoming_crq_table_name = str(os.getenv('UPCOMING_CRQ_TABLE_NAME'))    
     fetch_all_upcoming_crq_details_query = f"""select * from {upcoming_crq_table_name} order by id desc;"""    
-    past_crq_all_data = db.get_data(sql_query=fetch_all_upcoming_crq_details_query)
+    upcoming_crq_all_data = db.get_data(sql_query=fetch_all_upcoming_crq_details_query)
+    
+    if request.method == 'POST':
+        action_taken = request.POST['crq_number']
+        print(action_taken)
+    
+    conflict_counter = 2
     
     context = {
-        'past_crq_all_data': past_crq_all_data
+        'upcoming_crq_all_data': upcoming_crq_all_data,
+        'conflict_counter': conflict_counter
     }
     return render(request, "crq_app/app_owner_view.html", context= context)

@@ -38,38 +38,95 @@
     </div>
     {% comment %} Page Title Ends {% endcomment %}
 
-    {% comment %} Input Form Starts {% endcomment %}
+    {% comment %} Filter Form Starts Here {% endcomment %}
     <div class="container">
-        <h4 style="color: red;">**Insert the details below</h4>
+        <h4 style="color: red;">**Use below filters to see specific mapping data</h4>
         <form method="POST" class="post-form text-center">
             <table class="table table-sm table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
                         <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Name</th>
                         <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Owner</th>
-                        <th style="text-align: center; border: 1px solid black; padding: 3px;">FQDN</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 3px;">Business Unit</th>
+                        <th style="text-align: center; border: 1px solid black; padding: 3px;">Action</th>
                     </tr>
                 </thead>
-                {% if mapping_data %}
                 <tbody>
-                    {% for data in mapping_data %}
                     <tr>
                         <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
-                            {{ data.Application_Name }}
+                            <select id="application_name", name="application_name">
+                                <option value = "select">--select--</option>
+                                {% if unique_application_data %}
+                                    {% for data in unique_application_data %}
+                                        <option value = "{{data.Application_Name}}">{{ data.Application_Name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
                         </td>
                         <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
-                            {{ data.Application_Owner }}
+                            <select id="application_owner", name="application_owner">
+                                <option value = "select">--select--</option>
+                                {% if unique_application_owner_data %}
+                                    {% for data in unique_application_owner_data %}
+                                        <option value = "{{data.Application_Owner}}">{{ data.Application_Owner }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
                         </td>
                         <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
-                            {{ data.FQDN }}
+                            <select id="business_unit", name="business_unit">
+                                <option value = "select">--select--</option>
+                                {% if unique_business_unit_data %}
+                                    {% for data in unique_business_unit_data %}
+                                        <option value = "{{data.Business_Unit}}">{{ data.Business_Unit }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </td>
+                        <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                            {% csrf_token %}
+                            <button type="submit" class="save btn btn-info text-white"><i class="material-icons">filter_alt</i><b>  Filter</b></button>
                         </td>
                     </tr>
-                    {% endfor %}
                 </tbody>
-                {% endif %}
             </table>
         </form>
     </div>
+    {% comment %} Filter Form Ends Here {% endcomment %}
+
+    {% comment %} Table Starts Here {% endcomment %}
+    {% if filter_mapping_data %}
+        <hr style="color: white;">
+        <div class="container">
+            <form method="POST" class="post-form text-center">
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Name</th>
+                            <th style="text-align: center; border: 1px solid black; padding: 3px;">Application Owner</th>
+                            <th style="text-align: center; border: 1px solid black; padding: 3px;">FQDN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in filter_mapping_data %}
+                            <tr>
+                                <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                                    {{ data.Application_Name }}
+                                </td>
+                                <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                                    {{ data.Application_Owner }}
+                                </td>
+                                <td style="text-align: center; border: 1px solid black; padding: 3px; color: white;">
+                                    {{ data.FQDN }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    {% endif %}
+    {% comment %} Table Ends Here {% endcomment %}
 
     {% comment %} Import footer {% endcomment %}
     <footer class="bg-dark text-center text-lg-start my-0 py-1 fixed-bottom text-light">

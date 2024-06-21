@@ -52,25 +52,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                            <select id="application_name", name="application_name">
-                                {% if past_crq_all_data %}
-                                    {% for data in past_crq_all_data %}
-                                        <option value = "data">{{ data.CRQ_Number }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </td>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                            <label for="timeline_days" style="color: white;">Data from DB</label>
-                        </td>
-                        <td style="text-align: center; border: 1px solid white; padding: 3px;">
-                            {% csrf_token %}
-                            <button type="submit" class="save btn btn-success text-white"><i class="material-icons">check</i><b>  Approve</b></button>  
-                            <button type="submit" class="save btn btn-danger text-white"><i class="material-icons">close</i><b>  Reject</b></button>  
-                        </td>
-                    </tr>
+                    {% if upcoming_crq_all_data %}
+                        {% for data in upcoming_crq_all_data %}
+                            <tr>
+                                <td style="text-align: center; border: 1px solid white; padding: 3px;">
+                                    <label for="crq_number" id="crq_number" style="color: white;">{{ data.CRQ_Number }}</label>                            
+                                </td>
+                                <td style="text-align: center; border: 1px solid white; padding: 3px;">
+                                    <label for="change_name" style="color: white;">{{ data.Change_Asset_Group }}</label>
+                                </td>
+                                <td style="text-align: center; border: 1px solid white; padding: 3px;">
+                                    <label for="timeline_days" style="color: white;">Timeline from project team</label>
+                                </td>
+                                <td style="text-align: center; border: 1px solid white; padding: 3px;">
+                                    {% if conflict_counter == 0 %}
+                                        <label for="conflict" style="color: white;">NA</label>
+                                    {% else %}
+                                        <label for="conflict" style="color: white;">Yes/No</label>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: center; border: 1px solid white; padding: 3px;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="save btn btn-success text-white"><i class="material-icons">check</i><b>  Approve</b></button>  
+                                    <button type="submit" class="save btn btn-danger text-white"><i class="material-icons">close</i><b>  Reject</b></button>  
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </form>

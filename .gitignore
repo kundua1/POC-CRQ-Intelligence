@@ -3,4 +3,6 @@
 crq_project/crq_app/.env
 crq_project/crq_app/__pycache__/
 *.pyc
+crq_project/crq_project/__pycache__
 crq_project/crq_project/__pycache__/
+crq_project/crq_project/__pycache__/*
