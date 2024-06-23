@@ -15,11 +15,11 @@ load_dotenv()
 
 def handleLogin(request):
     if request.method == 'POST':
-        loginusername = request.POST['loginusername']
-        loginpassword = request.POST['loginpassword']
+        login_username = request.POST['login_username']
+        login_password = request.POST['login_password']
 
-        user = authenticate(username=loginusername,
-                            password=loginpassword)
+        user = authenticate(username=login_username,
+                            password=login_password)
 
         if user is not None:
             login(request, user)
@@ -38,7 +38,7 @@ def handleLogout(request):
     
 
 def index(request):
-    return render(request, "crq_app/index.html")
+    return render(request, "crq_app/login_validation.html")
 
 
 @login_required
@@ -52,10 +52,16 @@ def home(request):
     past_crq_table_name = str(os.getenv('PREVIOUS_CRQ_TABLE_NAME'))    
     fetch_all_past_crq_details_query = f"""select * from {past_crq_table_name} order by id desc;"""    
     past_crq_all_data = db.get_data(sql_query=fetch_all_past_crq_details_query)
-    print(past_crq_all_data)
+    
+    # Business Unit Data
+    wintel_inventory_table_name = str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))    
+    business_unit_count_query = f"""SELECT COUNT(DISTINCT Business_Unit) AS distinct_BU_count from {wintel_inventory_table_name};"""    
+    business_unit_count = db.get_data(sql_query=business_unit_count_query)
+    print(business_unit_count)
     
     context = {
-        'past_crq_all_data': past_crq_all_data
+        'past_crq_all_data': past_crq_all_data,
+        'business_unit_count': business_unit_count
     }
     return render(request, "crq_app/home.html", context=context)
 

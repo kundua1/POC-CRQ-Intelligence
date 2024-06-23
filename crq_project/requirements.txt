@@ -4,3 +4,5 @@ pyodbc
 pybase64
 openpyxl
 python-dotenv
+django-cors-headers
+django-session-timeout

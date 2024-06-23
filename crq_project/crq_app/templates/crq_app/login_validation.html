@@ -13,17 +13,15 @@
         {% endif %}
 
         {% if not user.is_authenticated %}
-            <h2 style="font-family: 'Bree Serif', serif; text-align: center;"><b>CRQ &nbsp; Intelligence</b></h2>
-            <h1 style="font-family: 'Alfa Slab One', cursive; text-align: center;"><b>Watch Tower</b></h1><br><br><br>
+            <h2 style="font-family: 'Bree Serif', serif; text-align: center;"><b>CRQ &nbsp; Intelligence</b></h2><br><br>
             <h3 style="text-align: center;">Your Session is Inactive and Access is Restricted!</h3>
             <h3 style="text-align: center;">Please Login to Continue!</h3>
         {% endif %}
 
         {% if user.is_authenticated %}
-            <h2 style="font-family: 'Bree Serif', serif; text-align: center;"><b>CRQ &nbsp; Intelligence</b></h2>
-            <h1 style="font-family: 'Alfa Slab One', cursive; text-align: center;"><b>Watch Tower</b></h1><br><br><br>
+            <h2 style="font-family: 'Bree Serif', serif; text-align: center;"><b>CRQ &nbsp; Intelligence</b></h2><br><br>
             <h3 style="text-align: center;">You are already Logged In and Your Session is Active!</h3>
-            <h3 style="text-align: center;"><a style="color: white; background-color: transparent; text-decoration: underline;" href="/ccc">Click Here to Return to Dashboard!    <i class="material-icons">keyboard_return</i></a></h3>
+            <h3 style="text-align: center;"><a style="color: white; background-color: transparent; text-decoration: underline;" href="/home">Click Here to Return to Dashboard!    <i class="material-icons">keyboard_return</i></a></h3>
         {% endif %}
     </div>
 </div>
