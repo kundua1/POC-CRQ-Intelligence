@@ -10,6 +10,10 @@ from django.contrib import auth
 
 from django.contrib import messages
 
+import sys
+sys.path.insert(1, 'crq_project\\crq_app\\misc_functions\\llm_functions')
+# from . import get_llm_response
+
 load_dotenv()
 
 
@@ -44,6 +48,16 @@ def index(request):
 @login_required
 def home(request):
     from . import db
+    
+    # Metrics Data
+    unique_apps_servers_count_query = f"""SELECT 
+                                        Business_Unit,
+                                        COUNT(DISTINCT Application_Name) AS unique_applications_count,
+                                        COUNT(DISTINCT FQDN) AS unique_servers_count
+                                    FROM {str(os.getenv('WINTEL_INVENTORY_TABLE_NAME'))}
+                                    GROUP BY Business_Unit;"""
+    unique_apps_servers_count = db.get_data(sql_query=unique_apps_servers_count_query)
+    
     # Ongoing
     
     # Upcoming
@@ -61,7 +75,8 @@ def home(request):
     
     context = {
         'past_crq_all_data': past_crq_all_data,
-        'business_unit_count': business_unit_count
+        'business_unit_count': business_unit_count,
+        'unique_apps_servers_count': unique_apps_servers_count
     }
     return render(request, "crq_app/home.html", context=context)
 
@@ -190,3 +205,16 @@ def app_owner_view(request):
         'conflict_counter': conflict_counter
     }
     return render(request, "crq_app/app_owner_view.html", context= context)
+
+
+@login_required
+def smoo_view(request):
+    from . import db
+    
+    upcoming_crq_query = f"""select * from {str(os.getenv('UPCOMING_CRQ_TABLE_NAME'))}"""
+    upcoming_crq_all_data = db.get_data(sql_query=upcoming_crq_query)
+    
+    context = {
+        'upcoming_crq_all_data': upcoming_crq_all_data
+    }
+    return render(request, "crq_app/smoo_manager_view.html", context=context)

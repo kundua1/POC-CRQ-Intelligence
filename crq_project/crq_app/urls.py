@@ -18,4 +18,7 @@ urlpatterns = [
 
     path('home/app-owner/', views.app_owner_view),
     path('home/app-owner/logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='handleLogout'),
+
+    path('home/smoo-manager/', views.smoo_view),
+    path('home/smoo-manager/logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='handleLogout'),
 ]

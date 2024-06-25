@@ -6,3 +6,5 @@ openpyxl
 python-dotenv
 django-cors-headers
 django-session-timeout
+openai==0.28
+python-docx

@@ -17,6 +17,38 @@
 
     <title>CRQ Intelligence | TCS-SCE | Homepage</title>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Business Unit', 'Application Count', 'Server Count'],
+            {% if unique_apps_servers_count %}
+            {% for data in unique_apps_servers_count %}
+                ['{{ data.Business_Unit }}', {{ data.unique_applications_count }}, {{ data.unique_servers_count }}],
+            {% endfor %}
+            {% endif %}
+        ]);
+
+        var options = {
+            backgroundColor: 'black',
+            chartArea: {
+                        backgroundColor: 'black'
+                    },
+          chart: {
+            title: 'Application & Host Count W.R.T. Business Units',
+          },
+          bars: 'horizontal'
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('app_server_wrt_bu_chart'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
@@ -77,6 +109,37 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     {% comment %} Meter Ends Here {% endcomment %}
+
+
+    <style>
+        .card-container {
+            display: flex;
+            gap: 20px;
+          }
+          .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 5px;
+            text-align: center;
+            width: 130px;
+          }
+          .card h2 {
+            margin: 0;
+            color: #333;
+            font-size: 14px;
+          }
+          .card p {
+            margin: 10px 0 0;
+            color: #666;
+            font-size: 12px;
+          }
+          .metric {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4CAF50;
+          }
+    </style>
 </head>
 
 <body>
@@ -91,14 +154,12 @@
         <h3 class="text-center text-monospace font-weight-bolder">Homepage</h3>
     </div>
     {% comment %} Page Title Ends {% endcomment %}
-    
-    <p style="color: white">hello{{ past_crq_all_data.0.Windows_Server_Count }}</p>
 
     {% comment %} Row 1 of Homepage starts here. {% endcomment %}
     <div class="row justify-content-md-center border border-light">
         {% comment %} Column 1 of Row 1 Starts Here {% endcomment %}
         <div class="col border border-light">
-            <div class="container-fluid" id="past_crq_all_data_chart" style="width: 408px; height: 270px;"></div>
+            <div id="app_server_wrt_bu_chart" style="width: 600px; height: 350px;"></div>
         </div>
         {% comment %} Column 1 of Row 1 Ends Here. {% endcomment %}
 
@@ -114,7 +175,39 @@
         </div>
         {% comment %} Column 2 of Row 1 Ends Here. {% endcomment %}
     </div>
-    {% comment %} Row 1 Homepage ends here. {% endcomment %}    
+    {% comment %} Row 1 Homepage ends here. {% endcomment %}   
+    
+    {% comment %} Row 2 of Homepage starts here. {% endcomment %}
+    <div class="row justify-content-md-center border border-light">
+        {% comment %} Column 1 of Row 2 Starts Here {% endcomment %}
+        <div class="col border border-light">
+            <div class="card-container">
+                <div class="card">
+                  <h2>Title 1</h2>
+                  <p class="metric">123</p>
+                  <p>Description</p>
+                </div>
+                <div class="card">
+                  <h2>Title 2</h2>
+                  <p class="metric">456</p>
+                  <p>Description</p>
+                </div>
+                <div class="card">
+                  <h2>Title 3</h2>
+                  <p class="metric">789</p>
+                  <p>Description</p>
+                </div>
+              </div>
+        </div>
+        {% comment %} Column 1 of Row 2 Ends Here. {% endcomment %}
+
+        {% comment %} Column 2 of Row 2 Starts Here {% endcomment %}
+        <div class="col border border-light">
+            <h3 style="color: white;">Track different status (approval pending/approved/crq in progress) of CRQ by role of user.</h3>
+        </div>
+        {% comment %} Column 2 of Row 2 Ends Here. {% endcomment %}
+    </div>
+    {% comment %} Row 2 Homepage ends here. {% endcomment %}
 
 
     {% comment %} Import footer {% endcomment %}
