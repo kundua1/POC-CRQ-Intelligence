@@ -1,9 +1,8 @@
 from docx import Document
 
-def read_docx_text(file_path):
-    """Reads text from a .docx file and stores it in a variable.
-    """
 
+# Reads text from a .docx file and stores it in a variable.
+def read_docx_text(file_path):
     doc = Document(file_path)
     all_paragraphs = ""
 
